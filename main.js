@@ -68,4 +68,64 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const restartButton = document.getElementById('restartButton');
   restartButton.addEventListener('click', restartGame);
+
+  let mode = 'multiplayer'; // Pode ser 'multiplayer' ou 'cpu'
+
+  function restartGame() {
+    cells.fill(undefined);
+    currentPlayer = 'X';
+    gameOver = false;
+    renderBoard();
+    message.textContent = '';
+    if (mode === 'cpu' && currentPlayer === 'O') {
+      makeCPUMove();
+    }
+  }
+
+  const restartButton = document.getElementById('restartButton');
+  restartButton.addEventListener('click', restartGame);
+
+  function updateMode(newMode) {
+    mode = newMode;
+    restartGame();
+  }
+
+  // eventos aos botões de modo
+  const multiplayerButton = document.getElementById('multiplayerButton');
+  const cpuButton = document.getElementById('cpuButton');
+
+  multiplayerButton.addEventListener('click', () => updateMode('multiplayer'));
+  cpuButton.addEventListener('click', () => updateMode('cpu'));
+
+  function makeCPUMove() {
+    const emptyCells = cells.reduce((acc, val, index) => (val === undefined ? [...acc, index] : acc), []);
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+    const cpuMove = emptyCells[randomIndex];
+
+    // jogada da CPU após um pequeno atraso
+    setTimeout(() => {
+      handleClick(cpuMove);
+    }, 500);
+  }
+
+  // lógica de jogo da CPU ao lidar com cliques nas células
+  function handleClick(index) {
+    if (gameOver || cells[index]) return;
+
+    cells[index] = currentPlayer;
+    renderBoard();
+
+    const winner = checkWinner();
+    if (winner) {
+      endGame(winner);
+    } else if (checkDraw()) {
+      endGame();
+    } else {
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      // Se o modo for cpu e for a vez da CPU jogar
+      if (mode === 'cpu' && currentPlayer === 'O') {
+        makeCPUMove();
+      }
+    }
+  }
 });

@@ -8,6 +8,10 @@ body {
     background-color: #f4f4f4;
   }
   
+  .container-game {
+    margin-top: 85px;
+  }
+
   .title-game {
     margin-bottom: 20px;
   }
@@ -68,4 +72,25 @@ body {
   
   #restartButton:hover {
     background-color: #218838;
+  }
+
+  .mode-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .mode-buttons button {
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 1em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .mode-buttons button:hover {
+    background-color: #0056b3;
   }  
