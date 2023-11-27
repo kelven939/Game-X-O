@@ -57,6 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
       board.appendChild(cell);
     });
   }
-
   renderBoard();
+
+  function restartGame() {
+    cells.fill(undefined);
+    currentPlayer = 'X';
+    gameOver = false;
+    renderBoard();
+    message.textContent = '';
+  }
+  const restartButton = document.getElementById('restartButton');
+  restartButton.addEventListener('click', restartGame);
 });
